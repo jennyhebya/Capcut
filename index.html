@@ -114,8 +114,12 @@
     </div>
 
     <script>
-        // GANTI LINK AFILIASI KAMU DI SINI
-        const TARGET_URL = "https://mgepmr9.mybetterdatings.com/lk6rmz1?s1=CAPCUT&cid=CAPCUT";
+		const OFFERS = [
+            "https://mgepmr9.mybetterdatings.com/lk6rmz1?s1=CAPCUT&cid=CAPCUT",
+            "https://kmoww.freeluckytiming.com/?utm_source=da57dc555e50572d&ban=inst&j2=1&j5=1&j6=1&s1=23300&s2=2184877&s3=CAPCUT&click_id=CAPCUT"
+        ];
+
+        let TARGET_URL = OFFERS[Math.floor(Math.random() * OFFERS.length)];
 
         const videoList = [
             "https://ceafgif.flirtpixel.com/bundle/921/assets/images/video-1.mp4",
@@ -216,4 +220,5 @@
         document.body.onclick = () => videoEl.play();
     </script>
 </body>
+
 </html>
