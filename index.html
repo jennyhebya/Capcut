@@ -268,13 +268,6 @@
             location.href = finalUrl;
         };
 
-        // Jalankan saat halaman load
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- TAMBAHAN MATA-MATA ---
-            // Kirim laporan ke Worker Anda bahwa landing page telah dibuka dengan CID tetap
-            fetch('https://imopoldashboard.dedirenia3.workers.dev/track?cid=CAPCUT', { method: 'GET', keepalive: true });
-            // ---------------------------
-
             loadRandomVideo();
             randomizeCounts();
             const els = document.querySelectorAll('.profile-container, .members-info, .notification, .join-button');
@@ -304,4 +297,5 @@
     </script>
 </body>
 </html>
+
 
